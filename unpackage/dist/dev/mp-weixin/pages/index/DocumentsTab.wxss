@@ -1,0 +1,338 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 基础配色定义 - 浅蓝浅粉为主 */
+.data-v-ef92d19a:root {
+  --primary-light-blue: #DCEEFF;  /* 浅蓝主色 */
+  --primary-light-pink: #FEE6EB;  /* 浅粉主色 */
+  --accent-blue: #A4D0F8;        /* 深蓝强调色 */
+  --accent-pink: #F9CAD3;        /* 深粉强调色 */
+  --white: #FFFFFF;               /* 白色背景 */
+  --text-dark: #333333;           /* 主要文字 */
+  --text-gray: #666666;           /* 次要文字 */
+  --shadow: 0 3rpx 12rpx rgba(0, 0, 0, 0.05); /* 统一阴影 */
+}
+/* 页面整体样式 */
+.home-bg.data-v-ef92d19a {
+  min-height: 100vh;
+  background-color: var(--primary-light-blue); /* 浅蓝背景 */
+  /*顶部内边距 */
+  padding-top: 80rpx; 
+  box-sizing: border-box;
+}
+/* 搜索栏样式 */
+.search-header.data-v-ef92d19a {
+  padding: 15rpx 30rpx 30rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.search-input.data-v-ef92d19a {
+  width: 100%;
+  height: 76rpx;
+  background-color: var(--white);
+  border-radius: 38rpx; /* 圆角 */
+  border: none;
+  padding-left: 36rpx;
+  padding-right: 80rpx;
+  font-size: 28rpx;
+  color: var(--text-gray);
+  box-shadow: var(--shadow);
+  box-sizing: border-box;
+  outline: none;
+}
+.search-icon.data-v-ef92d19a {
+  width: 34rpx;
+  height: 34rpx;
+  position: absolute;
+  right: 60rpx;
+  color: var(--accent-pink); /* 粉色图标 */
+}
+/* 内容区域 */
+.content-inner.data-v-ef92d19a {
+  padding: 0 30rpx;
+  width: 100%;
+  box-sizing: border-box;
+  /* 顶部间距，让搜索栏和内容区有合适间隔 */
+  margin-top: 20rpx;
+}
+.issue-cards.data-v-ef92d19a {
+  margin-bottom: 40rpx;
+}
+/* 卡片统一样式 */
+.issue-card.data-v-ef92d19a {
+  background-color: var(--white);
+  border-radius: 18rpx;
+  padding: 30rpx;
+  margin-bottom: 22rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+/* 点击交互效果 */
+.issue-card.data-v-ef92d19a:active {
+  -webkit-transform: translateY(2rpx);
+          transform: translateY(2rpx);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+/* 卡片左侧装饰（浅蓝/浅粉交替） */
+.issue-card.data-v-ef92d19a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15rpx;
+  bottom: 15rpx;
+  width: 8rpx;
+  border-radius: 4rpx;
+}
+/* 奇偶卡片交替配色 */
+.issue-card.data-v-ef92d19a:nth-child(odd)::before {
+  background-color: var(--accent-pink); /* 奇数卡片 - 粉色装饰 */
+}
+.issue-card.data-v-ef92d19a:nth-child(even)::before {
+  background-color: var(--accent-blue); /* 偶数卡片 - 蓝色装饰 */
+}
+/* 卡片图标 */
+.issue-icon.data-v-ef92d19a {
+  font-size: 48rpx;
+  margin-left: 20rpx; /* 避开左侧装饰条 */
+  margin-right: 28rpx;
+  color: var(--text-gray);
+}
+/* 卡片内容区 */
+.issue-content.data-v-ef92d19a {
+  flex: 1;
+  padding: 5rpx 0;
+}
+.issue-en.data-v-ef92d19a {
+  font-size: 24rpx;
+  color: var(--text-gray);
+  display: block;
+  margin-bottom: 6rpx;
+  letter-spacing: 0.5rpx;
+}
+.issue-zh.data-v-ef92d19a {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--text-dark);
+  display: block;
+  margin-bottom: 5rpx;
+}
+.issue-desc.data-v-ef92d19a {
+  font-size: 24rpx;
+  color: var(--text-gray);
+  display: block;
+  opacity: 0.9;
+}
+/* 弹窗样式 */
+.modal-overlay.data-v-ef92d19a {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modal-content.data-v-ef92d19a {
+  width: 600rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+  -webkit-animation: modalSlideIn-data-v-ef92d19a 0.3s ease-out;
+          animation: modalSlideIn-data-v-ef92d19a 0.3s ease-out;
+}
+@-webkit-keyframes modalSlideIn-data-v-ef92d19a {
+from {
+    opacity: 0;
+    -webkit-transform: translateY(-50rpx) scale(0.9);
+            transform: translateY(-50rpx) scale(0.9);
+}
+to {
+    opacity: 1;
+    -webkit-transform: translateY(0) scale(1);
+            transform: translateY(0) scale(1);
+}
+}
+@keyframes modalSlideIn-data-v-ef92d19a {
+from {
+    opacity: 0;
+    -webkit-transform: translateY(-50rpx) scale(0.9);
+            transform: translateY(-50rpx) scale(0.9);
+}
+to {
+    opacity: 1;
+    -webkit-transform: translateY(0) scale(1);
+            transform: translateY(0) scale(1);
+}
+}
+.modal-header.data-v-ef92d19a {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+.modal-icon.data-v-ef92d19a {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+.modal-title.data-v-ef92d19a {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+.modal-body.data-v-ef92d19a {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+.modal-text.data-v-ef92d19a {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+  line-height: 1.5;
+}
+.modal-subtext.data-v-ef92d19a {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+}
+.modal-footer.data-v-ef92d19a {
+  text-align: center;
+}
+.modal-btn.data-v-ef92d19a {
+  background: linear-gradient(135deg, #55aaff, #aadbff);
+  border: none;
+  border-radius: 50rpx;
+  padding: 20rpx 60rpx;
+  transition: all 0.3s ease;
+}
+.modal-btn.data-v-ef92d19a:active {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+}
+.modal-btn .btn-text.data-v-ef92d19a {
+  color: #ffffff;
+  font-size: 35rpx;
+  font-weight: 500;
+}
+

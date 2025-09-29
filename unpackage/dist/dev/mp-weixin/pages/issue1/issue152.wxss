@@ -1,0 +1,110 @@
+
+.container.data-v-3972d363 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fafafa;
+  /* 增加顶部安全距离，适配刘海屏 */
+  padding-top: env(safe-area-inset-top);
+}
+
+/* 内容区域 */
+.content.data-v-3972d363 {
+  flex: 1;
+  padding: 8px;
+}
+
+/* 网格布局 */
+.grid-layout.data-v-3972d363 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* 媒体卡片 */
+.media-card.data-v-3972d363 {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+}
+.media-card.data-v-3972d363:active {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+}
+
+/* 媒体容器 */
+.media-container.data-v-3972d363 {
+  position: relative;
+  width: 100%;
+  padding-top: 140%; /* 4:5.6 比例，类似小红书图片比例 */
+}
+.media-item.data-v-3972d363 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 视频标签 */
+.video-tag.data-v-3972d363 {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 媒体描述 */
+.media-desc.data-v-3972d363 {
+  padding: 8px;
+  font-size: 14px;
+  color: #333333;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+/* 加载指示器 */
+.loading-indicator.data-v-3972d363 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+.loading-spinner.data-v-3972d363 {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #dddddd;
+  border-top-color: #333333;
+  border-radius: 50%;
+  -webkit-animation: spin-data-v-3972d363 1s linear infinite;
+          animation: spin-data-v-3972d363 1s linear infinite;
+  margin-bottom: 8px;
+}
+.loading-text.data-v-3972d363 {
+  font-size: 14px;
+  color: #999999;
+}
+@-webkit-keyframes spin-data-v-3972d363 {
+to { -webkit-transform: rotate(360deg); transform: rotate(360deg);
+}
+}
+@keyframes spin-data-v-3972d363 {
+to { -webkit-transform: rotate(360deg); transform: rotate(360deg);
+}
+}
+
+

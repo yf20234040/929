@@ -1,0 +1,151 @@
+
+.container.data-v-57211de6 {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #aaaaff 0%, #aaaaff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 顶部导航栏 */
+.header.data-v-57211de6 {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  position: relative;
+  z-index: 10;
+}
+.nav-left.data-v-57211de6 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(10rpx);
+          backdrop-filter: blur(10rpx);
+  margin-right: 20rpx;
+}
+.back-icon.data-v-57211de6 {
+  font-size: 32rpx;
+  color: white;
+  font-weight: bold;
+}
+.title.data-v-57211de6 {
+  font-size: 45rpx;
+  font-weight: bold;
+  color: white;
+}
+
+/* 内容区域 */
+.content.data-v-57211de6 {
+  padding: 40rpx 30rpx;
+}
+
+/* 设置卡片 */
+.settings-card.data-v-57211de6 {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(20rpx);
+          backdrop-filter: blur(20rpx);
+  overflow: hidden;
+}
+.setting-item.data-v-57211de6 {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 40rpx;
+  transition: background-color 0.2s ease;
+}
+.setting-item.data-v-57211de6:active {
+  background-color: rgba(102, 126, 234, 0.05);
+}
+.setting-divider.data-v-57211de6 {
+  height: 1rpx;
+  background: rgba(0, 0, 0, 0.05);
+  margin: 0 40rpx;
+}
+.setting-icon.data-v-57211de6 {
+  font-size: 36rpx;
+  margin-right: 30rpx;
+  width: 40rpx;
+  text-align: center;
+}
+.setting-text.data-v-57211de6 {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+.setting-arrow.data-v-57211de6 {
+  font-size: 28rpx;
+  color: #ccc;
+}
+
+/* 新增：退出登录按钮样式（红色强调，区分普通选项） */
+.logout-item.data-v-57211de6:active {
+  background-color: rgba(255, 77, 79, 0.05); /* 红色背景高亮 */
+}
+.logout-icon.data-v-57211de6 {
+  color: #ff4d4f; /* 图标红色 */
+}
+.logout-text.data-v-57211de6 {
+  color: #ff4d4f; /* 文字红色 */
+}
+
+/* 关怀模式开关 */
+.setting-switch.data-v-57211de6 {
+  width: 80rpx;
+  height: 40rpx;
+  background: #e0e0e0;
+  border-radius: 20rpx;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.setting-switch.active.data-v-57211de6 {
+  background: #667eea;
+}
+.switch-thumb.data-v-57211de6 {
+  width: 36rpx;
+  height: 36rpx;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2rpx;
+  left: 2rpx;
+  transition: all 0.3s ease;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+.setting-switch.active .switch-thumb.data-v-57211de6 {
+  -webkit-transform: translateX(40rpx);
+          transform: translateX(40rpx);
+}
+
+/* 关怀模式样式（适配退出登录按钮） */
+.container.care-mode.data-v-57211de6 {
+  font-size: 1.2em;
+}
+.container.care-mode .title.data-v-57211de6 {
+  font-size: 42rpx;
+}
+.container.care-mode .setting-text.data-v-57211de6,
+.container.care-mode .logout-text.data-v-57211de6 { /* 关怀模式下退出文字放大 */
+  font-size: 36rpx;
+}
+.container.care-mode .setting-icon.data-v-57211de6,
+.container.care-mode .logout-icon.data-v-57211de6 { /* 关怀模式下退出图标放大 */
+  font-size: 42rpx;
+}
+.container.care-mode .setting-switch.data-v-57211de6 {
+  width: 100rpx;
+  height: 50rpx;
+}
+.container.care-mode .switch-thumb.data-v-57211de6 {
+  width: 46rpx;
+  height: 46rpx;
+}
+.container.care-mode .setting-switch.active .switch-thumb.data-v-57211de6 {
+  -webkit-transform: translateX(50rpx);
+          transform: translateX(50rpx);
+}
+

@@ -1,0 +1,206 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 多巴胺风格装饰元素 */
+.decor-element {
+  position: absolute;
+  border-radius: 50%;
+  -webkit-filter: blur(80rpx);
+          filter: blur(80rpx);
+  z-index: 0;
+}
+.decor-1 {
+  width: 500rpx;
+  height: 500rpx;
+  background: rgba(255, 51, 102, 0.2);
+  top: 15%;
+  left: -150rpx;
+}
+.decor-2 {
+  width: 400rpx;
+  height: 400rpx;
+  background: rgba(51, 102, 255, 0.2);
+  bottom: 25%;
+  right: -100rpx;
+}
+.decor-3 {
+  width: 300rpx;
+  height: 300rpx;
+  background: rgba(255, 204, 0, 0.2);
+  top: 65%;
+  left: 30%;
+}
+/* 进度条样式 */
+.progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8rpx;
+  background-color: rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  box-shadow: 0 -1rpx 5rpx rgba(0, 0, 0, 0.05);
+}
+.progress-fill {
+  height: 100%;
+  transition: width 0.03s linear; /* 平滑过渡效果 */
+  box-shadow: 0 0 15rpx currentColor;
+}
+/* 内容样式 */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  padding: 0 40rpx; /* 添加左右内边距，防止内容超出屏幕 */
+}
+.logo {
+  /* 调整图片大小，使其更适合各种屏幕 */
+  width: 80vw;
+  max-width: 500rpx;
+  height: auto; /* 保持宽高比 */
+  margin: 0 auto 80rpx; /* 居中并增加底部间距 */
+  z-index: 10;
+  /* 增强发光效果 */
+  -webkit-filter: drop-shadow(0 0 25rpx rgba(255, 51, 102, 0.25));
+          filter: drop-shadow(0 0 25rpx rgba(255, 51, 102, 0.25));
+  transition: -webkit-transform 3s ease;
+  transition: transform 3s ease;
+  transition: transform 3s ease, -webkit-transform 3s ease;
+  -webkit-animation: pulse 3s infinite;
+          animation: pulse 3s infinite;
+}
+/* 呼吸动画 */
+@-webkit-keyframes pulse {
+0% { -webkit-transform: scale(1); transform: scale(1);
+}
+50% { -webkit-transform: scale(1.05); transform: scale(1.05);
+}
+100% { -webkit-transform: scale(1); transform: scale(1);
+}
+}
+@keyframes pulse {
+0% { -webkit-transform: scale(1); transform: scale(1);
+}
+50% { -webkit-transform: scale(1.05); transform: scale(1.05);
+}
+100% { -webkit-transform: scale(1); transform: scale(1);
+}
+}
+.text-area {
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+  margin-bottom: 120rpx; /* 增加与底部的距离 */
+}
+.title {
+  font-size: 48rpx;
+  font-weight: 700;
+  background: linear-gradient(90deg, #FF3366, #3366FF, #FFCC00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+  -webkit-animation: gradientShift 5s ease infinite;
+          animation: gradientShift 5s ease infinite;
+  text-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+@-webkit-keyframes gradientShift {
+0% { background-position: 0% 50%;
+}
+50% { background-position: 100% 50%;
+}
+100% { background-position: 0% 50%;
+}
+}
+@keyframes gradientShift {
+0% { background-position: 0% 50%;
+}
+50% { background-position: 100% 50%;
+}
+100% { background-position: 0% 50%;
+}
+}
+

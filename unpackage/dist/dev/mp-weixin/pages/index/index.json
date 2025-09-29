@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "历小包",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "home-tab": "/pages/index/HomeTab",
+    "documents-tab": "/pages/index/DocumentsTab",
+    "team-tab": "/pages/index/TeamTab",
+    "profile-tab": "/pages/index/ProfileTab"
+  }
+}

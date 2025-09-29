@@ -1,0 +1,134 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*每个页面公共css */
+/* 全局关怀模式样式 */
+/* 基础字体放大 */
+.care-mode {
+  font-size: 1.2em !important;
+}
+/* 标题样式 */
+.care-mode .title,
+.care-mode .main-title,
+.care-mode .page-title,
+.care-mode .nav-title {
+  font-size: 1.3em !important;
+}
+/* 文本样式 */
+.care-mode .text,
+.care-mode .content-text,
+.care-mode .desc-text,
+.care-mode .info-text {
+  font-size: 1.2em !important;
+}
+/* 按钮样式 */
+.care-mode .btn,
+.care-mode .button,
+.care-mode .action-btn {
+  font-size: 1.2em !important;
+  padding: 1.2em 1.5em !important;
+  min-height: 1.2em !important;
+}
+/* 输入框样式 */
+.care-mode .input,
+.care-mode .textarea {
+  font-size: 1.2em !important;
+  padding: 1.2em !important;
+  min-height: 1.2em !important;
+}
+/* 卡片样式 */
+.care-mode .card,
+.care-mode .item-card,
+.care-mode .content-card {
+  padding: 1.2em !important;
+}
+/* 图标样式 */
+.care-mode .icon,
+.care-mode .setting-icon,
+.care-mode .service-icon {
+  font-size: 1.3em !important;
+  width: 1.3em !important;
+  height: 1.3em !important;
+}
+/* 开关样式 */
+.care-mode .switch,
+.care-mode .setting-switch {
+  width: 1.25em !important;
+  height: 1.25em !important;
+}
+.care-mode .switch-thumb,
+.care-mode .setting-switch .switch-thumb {
+  width: 1.15em !important;
+  height: 1.15em !important;
+}
+/* 导航栏样式 */
+.care-mode .nav-bar,
+.care-mode .header {
+  padding: 1.2em !important;
+}
+.care-mode .nav-title,
+.care-mode .header-title {
+  font-size: 1.3em !important;
+}
+/* 列表项样式 */
+.care-mode .list-item,
+.care-mode .menu-item,
+.care-mode .setting-item {
+  padding: 1.2em !important;
+  font-size: 1.2em !important;
+}
+/* 消息样式 */
+.care-mode .message-content,
+.care-mode .chat-message {
+  font-size: 1.2em !important;
+  line-height: 1.4 !important;
+}
+/* 标签样式 */
+.care-mode .tag,
+.care-mode .label,
+.care-mode .badge {
+  font-size: 1.1em !important;
+  padding: 0.3em 0.6em !important;
+}
+/* 表单样式 */
+.care-mode .form-item {
+  margin-bottom: 1.2em !important;
+}
+.care-mode .form-label {
+  font-size: 1.2em !important;
+  margin-bottom: 0.5em !important;
+}
+/* 模态框样式 */
+.care-mode .modal,
+.care-mode .popup {
+  font-size: 1.2em !important;
+}
+.care-mode .modal-title {
+  font-size: 1.3em !important;
+}
+/* 特殊页面样式 */
+.care-mode .user-name {
+  font-size: 1.4em !important;
+}
+.care-mode .user-desc {
+  font-size: 1.2em !important;
+}
+.care-mode .team-member-name {
+  font-size: 1.3em !important;
+}
+.care-mode .team-member-desc {
+  font-size: 1.2em !important;
+}
+

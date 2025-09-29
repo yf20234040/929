@@ -1,0 +1,33 @@
+{
+  "name": "历小包",
+  "version": "1.0.0",
+  "description": "历小包应用",
+  "main": "main.js",
+  "scripts": {
+    "dev:h5": "echo '请在HBuilderX中运行项目'",
+    "build:h5": "echo '请在HBuilderX中构建项目'",
+    "dev:mp-weixin": "echo '请在HBuilderX中运行微信小程序'",
+    "build:mp-weixin": "echo '请在HBuilderX中构建微信小程序'"
+  },
+  "dependencies": {
+    "@alicloud/dysmsapi20170525": "^4.1.2",
+    "@alicloud/openapi-client": "^0.4.15",
+    "@alicloud/pop-core": "^1.8.0",
+    "@alicloud/sms-sdk": "^1.1.6",
+    "@alicloud/tea-util": "^1.4.10",
+    "@dcloudio/uni-ui": "^1.5.11",
+    "@vue-office/docx": "^1.6.3",
+    "ali-oss": "^6.23.0",
+    "axios": "^1.11.0",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.2",
+    "xlsx": "^0.18.5"
+  },
+  "author": "",
+  "license": "ISC"
+}

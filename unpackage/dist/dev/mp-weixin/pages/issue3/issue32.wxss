@@ -1,0 +1,226 @@
+
+.container.data-v-d066ecc8 {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+/* 标题样式 */
+.header.data-v-d066ecc8 {
+  text-align: center;
+  padding: 30rpx 0;
+  margin-bottom: 20rpx;
+  background-color: white;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+.title.data-v-d066ecc8 {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #1677ff;
+  display: block;
+  margin-bottom: 15rpx;
+}
+.subtitle.data-v-d066ecc8 {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+}
+
+/* 通用区块样式 */
+.section.data-v-d066ecc8 {
+  background-color: white;
+  border-radius: 16rpx;
+  margin-bottom: 25rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  padding: 0 25rpx 25rpx;
+}
+.section-title.data-v-d066ecc8 {
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.section-title text.data-v-d066ecc8 {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+.date-tag.data-v-d066ecc8 {
+  background-color: #e8f3ff;
+  color: #1677ff;
+  font-size: 24rpx;
+  padding: 5rpx 15rpx;
+  border-radius: 20rpx;
+  font-weight: normal;
+}
+.section-subtitle.data-v-d066ecc8 {
+  font-size: 26rpx;
+  color: #1677ff;
+  margin: 25rpx 0 15rpx;
+  display: block;
+  font-weight: bold;
+}
+
+/* 内容卡片样式 */
+.content-card.data-v-d066ecc8 {
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  line-height: 1.6;
+  margin-bottom: 10rpx;
+}
+.content-text.data-v-d066ecc8 {
+  font-size: 24rpx;
+  color: #333;
+  display: block;
+}
+
+/* 图片网格样式 */
+.image-grid.data-v-d066ecc8 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  margin-bottom: 10rpx;
+}
+.image-card.data-v-d066ecc8 {
+  position: relative;
+  border-radius: 12rpx;
+  overflow: hidden;
+  height: 240rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+.image-thumbnail.data-v-d066ecc8 {
+  width: 100%;
+  height: 100%;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+.image-overlay.data-v-d066ecc8 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.image-card:hover .image-overlay.data-v-d066ecc8 {
+  opacity: 1;
+}
+.image-card.data-v-d066ecc8:active {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+}
+.overlay-text.data-v-d066ecc8 {
+  color: white;
+  font-size: 24rpx;
+  margin-bottom: 8rpx;
+}
+.overlay-icon.data-v-d066ecc8 {
+  color: white;
+  font-size: 30rpx;
+}
+
+/* 文件列表样式 */
+.file-list.data-v-d066ecc8 {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+  margin-bottom: 10rpx;
+}
+.file-card.data-v-d066ecc8 {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+  border-left: 5rpx solid #1677ff;
+  transition: background-color 0.2s ease;
+}
+.file-card.data-v-d066ecc8:active {
+  background-color: #f0f0f0;
+}
+.file-icon-container.data-v-d066ecc8 {
+  width: 70rpx;
+  height: 70rpx;
+  background-color: #e8f3ff;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+.file-icon.data-v-d066ecc8 {
+  font-size: 36rpx;
+  color: #1677ff;
+}
+.file-info.data-v-d066ecc8 {
+  flex: 1;
+  min-width: 0;
+}
+.file-name.data-v-d066ecc8 {
+  display: block;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.file-type.data-v-d066ecc8 {
+  font-size: 22rpx;
+  color: #666;
+  background-color: #e8f3ff;
+  color: #1677ff;
+  padding: 3rpx 12rpx;
+  border-radius: 12rpx;
+  display: inline-block;
+}
+
+/* 查看按钮样式 */
+.view-btn.data-v-d066ecc8 {
+  min-width: 100rpx;
+  height: 50rpx;
+  background-color: #1677ff;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15rpx;
+}
+.view-btn-text.data-v-d066ecc8 {
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+/* 底部样式 */
+.footer.data-v-d066ecc8 {
+  text-align: center;
+  padding: 25rpx 0;
+  color: #666;
+  margin-top: 20rpx;
+}
+.organizer.data-v-d066ecc8 {
+  font-size: 24rpx;
+  display: block;
+}
+
+/* 响应式调整 */
+@media (min-width: 750rpx) {
+.image-grid.data-v-d066ecc8 {
+    grid-template-columns: repeat(4, 1fr);
+}
+}
+

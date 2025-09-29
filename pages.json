@@ -1,0 +1,350 @@
+{
+	"pages": [
+		{
+			"path": "pages/login/start",
+			"style": {
+				"navigationBarTitleText": "历小包"
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "历小包登录"
+			}
+		},
+
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "历小包",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/issue-detail/issue-detail",
+			"style": {
+				"navigationBarTitleText": "洞见历史",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/issue/introduction",
+			"style": {
+				"navigationBarTitleText": "项目简介",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/issue1/issue1",
+			"style": {
+				"navigationBarTitleText": "第一期",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/issue2/issue2",
+			"style": {
+				"navigationBarTitleText": "第二期",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/issue3/issue3",
+			"style": {
+				"navigationBarTitleText": "第三期",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/index/AiTab",
+			"style": {
+				"navigationBarTitleText": "AI问答",
+				"navigationStyle": "custom"
+			}
+		},
+		
+		{
+			"path": "pages/profile/edit-profile",
+			"style": {
+				"navigationBarTitleText": "编辑资料",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/settings/settings",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/issue1/issue111",
+			"style": { "navigationBarTitleText": "计划与进度" }
+		},
+		{
+			"path": "pages/issue1/issue112",
+			"style": { "navigationBarTitleText": "评价体系" }
+		},
+		{
+			"path": "pages/issue1/issue1124",
+			"style": { "navigationBarTitleText": "评价表" }
+		},
+		{
+			"path": "pages/issue1/issue11241",
+			"style": { "navigationBarTitleText": "团队互评表" }
+		},
+		{
+			"path": "pages/issue1/issue11242",
+			"style": { "navigationBarTitleText": "评价表（中学生版）" }
+		},
+		{
+			"path": "pages/issue1/issue11243",
+			"style": { "navigationBarTitleText": "评价表（助教版）" }
+		},
+		{
+			"path": "pages/issue1/issue11244",
+			"style": { "navigationBarTitleText": "评价表（家长版）" }
+		},
+		{
+			"path": "pages/issue1/issue11245",
+			"style": { "navigationBarTitleText": "评价表（家长版Excel）" }
+		},
+		{
+			"path": "pages/issue1/issue11246",
+			"style": { "navigationBarTitleText": "评价表（组长版）" }
+		},
+		{
+			"path": "pages/issue1/issue11247",
+			"style": { "navigationBarTitleText": "评价表（老师版）" }
+		},
+		{
+			"path": "pages/issue1/issue113",
+			"style": { "navigationBarTitleText": "第二期招募与培训" }
+		},
+		{
+			"path": "pages/issue1/issue1131",
+			"style": { "navigationBarTitleText": "研学项目第二期成员招募方案（终版）" }
+		},
+		{
+			"path": "pages/issue1/issue121",
+			"style": { "navigationBarTitleText": "荣誉与证书" }
+		},
+		{
+			"path": "pages/issue1/issue122",
+			"style": { "navigationBarTitleText": "媒体报道" }
+		},
+		{
+			"path": "pages/issue1/issue131",
+			"style": { "navigationBarTitleText": "脚本与文稿" }
+		},
+		{
+			"path": "pages/issue1/issue141",
+			"style": { "navigationBarTitleText": "复盘与优化" }
+		},
+		{
+			"path": "pages/issue1/issue151",
+			"style": { "navigationBarTitleText": "2.26踩点" }
+		},
+		{
+			"path": "pages/issue1/issue152",
+			"style": { "navigationBarTitleText": "4.22 第一次线上见面会" }
+		},
+		{
+			"path": "pages/issue1/issue153",
+			"style": { "navigationBarTitleText": "6.11 第二次线下见面会" }
+		},
+		{
+			"path": "pages/issue1/issue154",
+			"style": { "navigationBarTitleText": "7.17线下拍摄" }
+		},
+		{
+			"path": "pages/issue1/issue155",
+			"style": { "navigationBarTitleText": "7.27线下配音" }
+		},
+		{
+			"path": "pages/issue1/issue1561",
+			"style": { "navigationBarTitleText": "\"洞见历史\"项目制学习汇报会议程" }
+		},
+		{
+			"path": "pages/issue1/issue1562",
+			"style": { "navigationBarTitleText": "汇报会10.28分工名单" }
+		},
+		{
+			"path": "pages/issue1/issue1563",
+			"style": { "navigationBarTitleText": "路线指示牌" }
+		},
+		{
+			"path": "pages/issue2/issue211",
+			"style": { "navigationBarTitleText": "微课组成员" }
+		},
+		{
+			"path": "pages/issue2/issue212",
+			"style": { "navigationBarTitleText": "微课组内容" }
+		},
+		{
+			"path": "pages/issue2/issue213",
+			"style": { "navigationBarTitleText": "微课组详情" }
+		},
+		{
+			"path": "pages/issue2/issue214",
+			"style": { "navigationBarTitleText": "微课组信息" }
+		},
+		{
+			"path": "pages/issue2/issue22",
+			"style": { "navigationBarTitleText": "第二期内容" }
+		},
+		{
+			"path": "pages/issue2/issue23",
+			"style": { "navigationBarTitleText": "第二期详情" }
+		},
+		{
+			"path": "pages/issue2/issue24",
+			"style": { "navigationBarTitleText": "第二期信息" }
+		},
+		{
+			"path": "pages/issue2/issue25",
+			"style": { "navigationBarTitleText": "第二期项目" }
+		},
+		{
+			"path": "pages/issue2/issue26",
+			"style": { "navigationBarTitleText": "第二期成果" }
+		},
+		{
+			"path": "pages/issue3/issue31",
+			"style": { "navigationBarTitleText": "第三期内容" }
+		},
+		{
+			"path": "pages/issue3/issue32",
+			"style": { "navigationBarTitleText": "第三期详情" }
+		},
+		{
+			"path": "pages/issue3/issue34",
+			"style": { "navigationBarTitleText": "第三期信息" }
+		},
+		{
+			"path": "pages/issue3/issue35",
+			"style": { "navigationBarTitleText": "第三期项目" }
+		},
+		{
+			"path": "pages/issue3/issue331",
+			"style": { "navigationBarTitleText": "3月28日大学生们进行了首次见面" }
+		},
+		{
+			"path": "pages/issue3/issue332",
+			"style": { "navigationBarTitleText": "第三期成果展示" }
+		},
+		{
+			"path": "pages/issue3/issue361",
+			"style": { "navigationBarTitleText": "宣传组" }
+		},
+		{
+			"path": "pages/issue3/issue362",
+			"style": { "navigationBarTitleText": "第三期研究详情" }
+		},
+		{
+			"path": "pages/issue3/issue363",
+			"style": { "navigationBarTitleText": "第三期研究信息" }
+		},
+		{
+			"path": "pages/issue3/issue364",
+			"style": { "navigationBarTitleText": "第三期研究项目" }
+		},
+		{
+			"path": "pages/issue3/issue365",
+			"style": { "navigationBarTitleText": "第三期研究成果" }
+		},
+		{
+			"path": "pages/issue3/issue366",
+			"style": { "navigationBarTitleText": "第三期研究总结" }
+		},
+		{
+			"path": "pages/issue3/issue367",
+			"style": { "navigationBarTitleText": "第三期研究反馈" }
+		},
+		{
+			"path": "pages/issue3/issue371",
+			"style": { "navigationBarTitleText": "策展" }
+		},
+		{
+			"path": "pages/issue3/issue372",
+			"style": { "navigationBarTitleText": "第三期团队成果" }
+		},
+		{
+			"path": "pages/issue3/issue374",
+			"style": { "navigationBarTitleText": "第三期团队反馈" }
+		},
+		{
+			"path": "pages/issue3/issue375",
+			"style": { "navigationBarTitleText": "第三期团队评价" }
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "历小包",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	
+	"subPackages": [
+		{
+			"root": "pages/issue1",
+			"pages": [
+				"issue111",
+				"issue112", 
+				"issue113",
+				"issue1131",
+				"issue121",
+				"issue122",
+				"issue131",
+				"issue141",
+				"issue151",
+				"issue152",
+				"issue153",
+				"issue154",
+				"issue155"
+			],
+			"independent": true
+		},
+		{
+			"root": "pages/issue2",
+			"pages": [
+				"issue211",
+				"issue212",
+				"issue213",
+				"issue214",
+				"issue22",
+				"issue23",
+				"issue24",
+				"issue25",
+				"issue26"
+			],
+			"independent": true
+		},
+		{
+			"root": "pages/issue3",
+			"pages": [
+				"issue31",
+				"issue32",
+				"issue34",
+				"issue35",
+				"issue331",
+				"issue332",
+				"issue361",
+				"issue362",
+				"issue363",
+				"issue364",
+				"issue365",
+				"issue366",
+				"issue367",
+				"issue371",
+				"issue372",
+				"issue374",
+				"issue375"
+			],
+			"independent": true
+		}
+	],
+
+	"uniIdRouter": {}
+}
+

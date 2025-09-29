@@ -1,0 +1,1 @@
+<view class="wechat-login-container data-v-22327458"><button class="login-btn data-v-22327458" open-type="getPhoneNumber" loading="{{loading}}" disabled="{{loading}}" data-event-opts="{{[['getphonenumber',[['handleGetPhoneNumber',['$event']]]]]}}" bindgetphonenumber="__e">{{''+(loading?'登录中...':'立即登录')+''}}</button></view>
