@@ -81,8 +81,9 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = !_vm.userInfo.avatarUrl ? _vm.getAvatarText() : null
-  var m1 = _vm.getDisplayName()
+  var m0 =
+    _vm.isLoggedIn && !_vm.userInfo.avatarUrl ? _vm.getAvatarText() : null
+  var m1 = _vm.isLoggedIn ? _vm.getDisplayName() : null
   _vm.$mp.data = Object.assign(
     {},
     {
@@ -132,120 +133,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
 var _careMode = _interopRequireDefault(__webpack_require__(/*! @/mixins/careMode.js */ 40));
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+var _methods;
 var _default = {
   mixins: [_careMode.default],
   data: function data() {
@@ -269,10 +159,9 @@ var _default = {
   onShow: function onShow() {
     this.checkLoginStatus();
     this.loadAvatarSize();
-    this.loadCareMode(); // 确保从设置页面返回时重新加载关怀模式状态
+    this.loadCareMode();
   },
-
-  methods: {
+  methods: (_methods = {
     // 检查登录状态
     checkLoginStatus: function checkLoginStatus() {
       var userInfo = uni.getStorageSync('userInfo');
@@ -283,131 +172,113 @@ var _default = {
       // 调试信息
       console.log('用户信息:', this.userInfo);
       console.log('用户类型:', this.userInfo.userType);
-    },
-    // 跳转到登录页面
-    goToLogin: function goToLogin() {
-      uni.reLaunch({
-        url: '/pages/login/login'
-      });
-    },
-    // 编辑资料
-    editProfile: function editProfile() {
-      uni.navigateTo({
-        url: '/pages/profile/edit-profile'
-      });
-    },
-    // 获取显示名称
-    getDisplayName: function getDisplayName() {
-      // 优先显示昵称
-      if (this.userInfo.nickName && this.userInfo.nickName.trim()) {
-        return this.userInfo.nickName.trim();
-      }
-      // 其次显示真实姓名
-      if (this.userInfo.name && this.userInfo.name.trim()) {
-        return this.userInfo.name.trim();
-      }
-      // 如果有手机号，显示星号遮挡的手机号
-      if (this.userInfo.phone && this.userInfo.phone.trim()) {
-        return this.maskPhoneNumber(this.userInfo.phone);
-      }
-      // 默认提示
-      return '点击设置昵称';
-    },
-    // 手机号星号遮挡
-    maskPhoneNumber: function maskPhoneNumber(phone) {
-      if (!phone || phone.length < 11) {
-        return phone;
-      }
-      // 保留前3位和后4位，中间用星号遮挡
-      return phone.substring(0, 3) + '****' + phone.substring(7);
-    },
-    // 获取头像文字
-    getAvatarText: function getAvatarText() {
-      if (this.userInfo.nickName) {
-        return this.userInfo.nickName.charAt(0).toUpperCase();
-      } else if (this.userInfo.name) {
-        return this.userInfo.name.charAt(0).toUpperCase();
-      }
-      return '👤';
-    },
-    // 处理头像加载错误
-    handleAvatarError: function handleAvatarError() {
-      console.log('头像加载失败，使用默认头像');
-      this.userInfo.avatarUrl = '';
-    },
-    // 加载头像大小设置
-    loadAvatarSize: function loadAvatarSize() {
-      var savedSize = uni.getStorageSync('avatarSize');
-      if (savedSize) {
-        this.selectedAvatarSize = savedSize;
-      }
-    },
-    // 获取状态栏高度
-    getStatusBarHeight: function getStatusBarHeight() {
-      var systemInfo = uni.getSystemInfoSync();
-      this.statusBarHeight = systemInfo.statusBarHeight || 0;
-    },
-    // 处理客服联系
-    // 显示客服联系弹窗
-    showContactModal: function showContactModal() {
-      this.showModal = true;
-    },
-    // 隐藏客服联系弹窗
-    hideContactModal: function hideContactModal() {
-      this.showModal = false;
-    },
-    // 处理微信客服联系
-    handleContact: function handleContact(e) {
-      console.log('客服联系事件:', e.detail);
-      console.log('客服路径:', e.detail.path);
-      console.log('客服查询参数:', e.detail.query);
-
-      // 关闭弹窗
-      this.hideContactModal();
-
-      // 显示转接提示
-      uni.showToast({
-        title: '正在为您转接客服',
-        icon: 'loading',
-        duration: 1500
-      });
-    },
-    // 复制微信号
-    copyWechat: function copyWechat() {
-      var _this = this;
-      var wechatId = 'lixiaobao_service'; // 替换为实际的微信号
-      uni.setClipboardData({
-        data: wechatId,
-        success: function success() {
-          _this.hideContactModal();
-          uni.showToast({
-            title: '微信号已复制',
-            icon: 'success',
-            duration: 2000
-          });
-        },
-        fail: function fail() {
-          uni.showToast({
-            title: '复制失败',
-            icon: 'none',
-            duration: 2000
-          });
-        }
-      });
-    },
-    // 跳转到设置页面
-    goToSettings: function goToSettings() {
-      uni.navigateTo({
-        url: '/pages/settings/settings'
-      });
-    },
-    // 跳转到个人资料编辑页面
-    goToProfile: function goToProfile() {
-      uni.navigateTo({
-        url: '/pages/profile/edit-profile'
-      });
     }
-  }
+  }, (0, _defineProperty2.default)(_methods, "checkLoginStatus", function checkLoginStatus() {
+    var userInfo = uni.getStorageSync('userInfo');
+    var isLoggedIn = uni.getStorageSync('isLoggedIn');
+
+    // 严格判断登录状态
+    this.isLoggedIn = isLoggedIn === true || isLoggedIn === 'true';
+    this.userInfo = userInfo || {};
+
+    // 调试信息
+    console.log('用户信息:', this.userInfo);
+    console.log('登录状态:', this.isLoggedIn);
+  }), (0, _defineProperty2.default)(_methods, "goToLogin", function goToLogin() {
+    uni.reLaunch({
+      url: '/pages/login/login'
+    });
+  }), (0, _defineProperty2.default)(_methods, "editProfile", function editProfile() {
+    uni.navigateTo({
+      url: '/pages/profile/edit-profile'
+    });
+  }), (0, _defineProperty2.default)(_methods, "getDisplayName", function getDisplayName() {
+    // 优先显示昵称
+    if (this.userInfo.nickName && this.userInfo.nickName.trim()) {
+      return this.userInfo.nickName.trim();
+    }
+    // 其次显示真实姓名
+    if (this.userInfo.name && this.userInfo.name.trim()) {
+      return this.userInfo.name.trim();
+    }
+    // 如果有手机号，显示星号遮挡的手机号
+    if (this.userInfo.phone && this.userInfo.phone.trim()) {
+      return this.maskPhoneNumber(this.userInfo.phone);
+    }
+    // 默认提示
+    return '点击设置昵称';
+  }), (0, _defineProperty2.default)(_methods, "maskPhoneNumber", function maskPhoneNumber(phone) {
+    if (!phone || phone.length < 11) {
+      return phone;
+    }
+    // 保留前3位和后4位，中间用星号遮挡
+    return phone.substring(0, 3) + '****' + phone.substring(7);
+  }), (0, _defineProperty2.default)(_methods, "getAvatarText", function getAvatarText() {
+    if (this.userInfo.nickName) {
+      return this.userInfo.nickName.charAt(0).toUpperCase();
+    } else if (this.userInfo.name) {
+      return this.userInfo.name.charAt(0).toUpperCase();
+    }
+    return '👤';
+  }), (0, _defineProperty2.default)(_methods, "handleAvatarError", function handleAvatarError() {
+    console.log('头像加载失败，使用默认头像');
+    this.userInfo.avatarUrl = '';
+  }), (0, _defineProperty2.default)(_methods, "loadAvatarSize", function loadAvatarSize() {
+    var savedSize = uni.getStorageSync('avatarSize');
+    if (savedSize) {
+      this.selectedAvatarSize = savedSize;
+    }
+  }), (0, _defineProperty2.default)(_methods, "getStatusBarHeight", function getStatusBarHeight() {
+    var systemInfo = uni.getSystemInfoSync();
+    this.statusBarHeight = systemInfo.statusBarHeight || 0;
+  }), (0, _defineProperty2.default)(_methods, "showContactModal", function showContactModal() {
+    this.showModal = true;
+  }), (0, _defineProperty2.default)(_methods, "hideContactModal", function hideContactModal() {
+    this.showModal = false;
+  }), (0, _defineProperty2.default)(_methods, "handleContact", function handleContact(e) {
+    console.log('客服联系事件:', e.detail);
+    console.log('客服路径:', e.detail.path);
+    console.log('客服查询参数:', e.detail.query);
+
+    // 关闭弹窗
+    this.hideContactModal();
+
+    // 显示转接提示
+    uni.showToast({
+      title: '正在为您转接客服',
+      icon: 'loading',
+      duration: 1500
+    });
+  }), (0, _defineProperty2.default)(_methods, "copyWechat", function copyWechat() {
+    var _this = this;
+    var wechatId = 'lixiaobao_service'; // 替换为实际的微信号
+    uni.setClipboardData({
+      data: wechatId,
+      success: function success() {
+        _this.hideContactModal();
+        uni.showToast({
+          title: '微信号已复制',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+      fail: function fail() {
+        uni.showToast({
+          title: '复制失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    });
+  }), (0, _defineProperty2.default)(_methods, "goToSettings", function goToSettings() {
+    uni.navigateTo({
+      url: '/pages/settings/settings'
+    });
+  }), (0, _defineProperty2.default)(_methods, "goToProfile", function goToProfile() {
+    uni.navigateTo({
+      url: '/pages/profile/edit-profile'
+    });
+  }), _methods)
 };
 exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))

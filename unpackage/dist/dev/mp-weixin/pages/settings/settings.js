@@ -225,14 +225,15 @@ var _default = {
         // 强调色（红色）
         success: function success(res) {
           if (res.confirm) {
-            // 2. 清除登录状态（根据实际项目存储方式调整，如uni.setStorageSync/uni.removeStorageSync）
+            // 2. 清除登录状态
             uni.removeStorageSync('wechatLoginToken'); // 清除登录token
             uni.removeStorageSync('userInfo'); // 清除用户信息
+            uni.removeStorageSync('isLoggedIn'); // 清除登录状态标记
 
-            // 3. 关闭所有页面，跳转到主页
-            uni.reLaunch({
-              url: '/pages/login/index',
-              // 
+            // 3. 跳转到个人中心页面（而非登录页）
+            uni.redirectTo({
+              url: '/pages/index/index?tab=4',
+              // 假设个人中心是第4个tab
               success: function success() {
                 // 4. 提示退出成功
                 uni.showToast({
@@ -242,7 +243,7 @@ var _default = {
                 });
               },
               fail: function fail(err) {
-                console.error('跳转登录页失败：', err);
+                console.error('跳转个人中心失败：', err);
                 uni.showToast({
                   title: '退出失败，请重试',
                   icon: 'none'

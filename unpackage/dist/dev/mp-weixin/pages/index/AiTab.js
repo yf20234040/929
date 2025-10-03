@@ -84,13 +84,16 @@ var render = function () {
   var g0 = _vm.messages.length
   var l0 = _vm.__map(_vm.messages, function (message, index) {
     var $orig = _vm.__get_orig(message)
-    var m0 = _vm.formatMessage(message.content)
+    var m0 =
+      message.type !== "image" && message.type !== "file"
+        ? _vm.formatMessage(message.content)
+        : null
     return {
       $orig: $orig,
       m0: m0,
     }
   })
-  var g1 = !_vm.inputMessage.trim() || _vm.isLoading
+  var g1 = (!_vm.inputMessage.trim() && !_vm.isUploading) || _vm.isLoading
   _vm.$mp.data = Object.assign(
     {},
     {
@@ -243,6 +246,19 @@ var _careMode = _interopRequireDefault(__webpack_require__(/*! @/mixins/careMode
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   mixins: [_careMode.default],
   data: function data() {
@@ -251,6 +267,8 @@ var _default = {
       inputMessage: '',
       messages: [],
       isLoading: false,
+      isUploading: false,
+      // 新增：上传状态
       scrollTop: 0,
       faqList: [{
         question: '什么是"洞见历史"研学项目？',
@@ -279,6 +297,7 @@ var _default = {
     var sys = uni.getSystemInfoSync();
     this.statusBarHeight = sys.statusBarHeight || 0;
     this.loadFaqList();
+    this.loadMessagesFromStorage(); // 加载本地存储的对话记录
 
     // 初始化窗口宽高和按钮位置
     this.windowWidth = sys.windowWidth;
@@ -286,12 +305,48 @@ var _default = {
     this.btnX = 30 / 2; // 转换rpx为px
     this.btnY = 500 / 2;
   },
+  onUnload: function onUnload() {
+    // 页面卸载时保存对话记录
+    this.saveMessagesToStorage();
+  },
+  onHide: function onHide() {
+    // 页面隐藏时保存对话记录
+    this.saveMessagesToStorage();
+  },
   methods: {
+    // 从本地存储加载对话记录
+    loadMessagesFromStorage: function loadMessagesFromStorage() {
+      try {
+        var storedMessages = uni.getStorageSync('chatHistory');
+        if (storedMessages) {
+          this.messages = JSON.parse(storedMessages);
+          this.scrollToBottom();
+        }
+      } catch (e) {
+        console.error('加载对话记录失败:', e);
+      }
+    },
+    // 保存对话记录到本地存储
+    saveMessagesToStorage: function saveMessagesToStorage() {
+      try {
+        // 只保存必要的字段，避免存储过大
+        var messagesToSave = this.messages.map(function (msg) {
+          return {
+            role: msg.role,
+            type: msg.type || 'text',
+            content: msg.content,
+            fileName: msg.fileName,
+            timestamp: msg.timestamp
+          };
+        });
+        uni.setStorageSync('chatHistory', JSON.stringify(messagesToSave));
+      } catch (e) {
+        console.error('保存对话记录失败:', e);
+      }
+    },
     // 格式化消息内容，处理Markdown
     formatMessage: function formatMessage(content) {
       if (!content) return '';
-
-      // 清理和格式化内容
       var formatted = content
       // 处理标题 - 移除#符号并转换为样式
       .replace(/^#{1,6}\s+(.*)$/gm, function (match, title) {
@@ -303,10 +358,10 @@ var _default = {
       .replace(/\*\*(.*?)\*\*/g, '<span style="font-weight: bold;">$1</span>')
       // 处理斜体
       .replace(/\*(.*?)\*/g, '<span style="font-style: italic;">$1</span>')
-      // 处理列表项
-      .replace(/^[\s]*[-*+]\s+(.*)$/gm, '<div style="margin: 8rpx 0; padding-left: 20rpx; position: relative;"><span style="position: absolute; left: 0; color: #666;">•</span>$1</div>')
+      // 处理无序列表
+      .replace(/^[\s]*[-*+]\s+(.*)$/gm, '<div style="margin: 12rpx 0; padding-left: 30rpx; position: relative; line-height: 1.8;"><span style="position: absolute; left: 0; color: #666; background: #fff;">•</span>$1</div>')
       // 处理数字列表
-      .replace(/^[\s]*(\d+)\.\s+(.*)$/gm, '<div style="margin: 8rpx 0; padding-left: 20rpx; position: relative;"><span style="position: absolute; left: 0; color: #666;">$1.</span>$2</div>')
+      .replace(/^[\s]*(\d+)\.\s+(.*)$/gm, '<div style="margin: 12rpx 0; padding-left: 30rpx; position: relative; line-height: 1.8;"><span style="position: absolute; left: 0; color: #666; background: #fff; padding-right: 4rpx;">$1.</span>$2</div>')
       // 处理换行
       .replace(/\n/g, '<br/>')
       // 清理多余的#符号
@@ -315,14 +370,11 @@ var _default = {
       .replace(/^#+\s*/gm, '');
       return formatted;
     },
-    // 原始返回逻辑保持不变
+    // 返回逻辑
     goBack: function goBack() {
       console.log('返回按钮被点击');
-      uni.showToast({
-        title: '返回按钮被点击',
-        icon: 'none',
-        duration: 1000
-      });
+      // 离开页面时保存对话
+      this.saveMessagesToStorage();
       try {
         // 先尝试返回上一页
         var pages = getCurrentPages();
@@ -366,49 +418,36 @@ var _default = {
         });
       }
     },
-    // 清空对话
-    clearChat: function clearChat() {
-      var _this = this;
-      uni.showModal({
-        title: '确认清空',
-        content: '确定要清空所有对话记录吗？',
-        success: function success(res) {
-          if (res.confirm) {
-            _this.messages = [];
-            _this.scrollToBottom();
-          }
-        }
-      });
-    },
     // 发送消息
     sendMessage: function sendMessage() {
-      var _this2 = this;
+      var _this = this;
       return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
         var userMessage, conversationHistory, response, _response$data;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(!_this2.inputMessage.trim() || _this2.isLoading)) {
+                if (!(!_this.inputMessage.trim() && !_this.isUploading || _this.isLoading)) {
                   _context.next = 2;
                   break;
                 }
                 return _context.abrupt("return");
               case 2:
-                userMessage = _this2.inputMessage.trim();
-                _this2.inputMessage = '';
+                userMessage = _this.inputMessage.trim();
+                _this.inputMessage = '';
 
                 // 添加用户消息
-                _this2.messages.push({
+                _this.messages.push({
                   role: 'user',
+                  type: 'text',
                   content: userMessage,
-                  timestamp: new Date()
+                  timestamp: new Date().toISOString()
                 });
-                _this2.scrollToBottom();
-                _this2.isLoading = true;
+                _this.scrollToBottom();
+                _this.isLoading = true;
                 _context.prev = 7;
                 // 构建对话历史
-                conversationHistory = _this2.messages.filter(function (msg) {
+                conversationHistory = _this.messages.filter(function (msg) {
                   return msg.role !== 'system';
                 }).map(function (msg) {
                   return {
@@ -433,10 +472,11 @@ var _default = {
                   break;
                 }
                 // 添加AI回复
-                _this2.messages.push({
+                _this.messages.push({
                   role: 'assistant',
+                  type: 'text',
                   content: response.data.data.answer,
-                  timestamp: new Date()
+                  timestamp: new Date().toISOString()
                 });
                 _context.next = 17;
                 break;
@@ -449,23 +489,102 @@ var _default = {
                 _context.prev = 19;
                 _context.t0 = _context["catch"](7);
                 console.error('AI问答失败:', _context.t0);
-                _this2.messages.push({
+                _this.messages.push({
                   role: 'assistant',
+                  type: 'text',
                   content: '抱歉，AI服务暂时不可用，请稍后再试。',
-                  timestamp: new Date()
+                  timestamp: new Date().toISOString()
                 });
               case 23:
                 _context.prev = 23;
-                _this2.isLoading = false;
-                _this2.scrollToBottom();
+                _this.isLoading = false;
+                _this.scrollToBottom();
+                // 保存对话记录
+                _this.saveMessagesToStorage();
                 return _context.finish(23);
-              case 27:
+              case 28:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[7, 19, 23, 27]]);
+        }, _callee, null, [[7, 19, 23, 28]]);
       }))();
+    },
+    // 选择文件
+    chooseFile: function chooseFile() {
+      var _this2 = this;
+      if (this.isLoading || this.isUploading) return;
+      uni.chooseMessageFile({
+        count: 1,
+        type: 'file',
+        success: function () {
+          var _success = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(res) {
+            return _regenerator.default.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _this2.isUploading = true;
+                    try {
+                      // 添加文件消息
+                      _this2.messages.push({
+                        role: 'user',
+                        type: 'file',
+                        content: res.tempFiles[0].path,
+                        fileName: res.tempFiles[0].name,
+                        fileSize: res.tempFiles[0].size,
+                        timestamp: new Date().toISOString()
+                      });
+                      _this2.scrollToBottom();
+                      // 保存对话记录
+                      _this2.saveMessagesToStorage();
+
+                      // 模拟AI回复
+                      setTimeout(function () {
+                        _this2.messages.push({
+                          role: 'assistant',
+                          type: 'text',
+                          content: "\u6211\u5DF2\u6536\u5230\u4F60\u53D1\u9001\u7684\u6587\u4EF6\u300A".concat(res.tempFiles[0].name, "\u300B\uFF0C\u9700\u8981\u6211\u5E2E\u4F60\u89E3\u6790\u6587\u4EF6\u5185\u5BB9\u5417\uFF1F"),
+                          timestamp: new Date().toISOString()
+                        });
+                        _this2.scrollToBottom();
+                        // 保存对话记录
+                        _this2.saveMessagesToStorage();
+                      }, 1000);
+                    } catch (error) {
+                      console.error('文件上传失败:', error);
+                      uni.showToast({
+                        title: '文件上传失败',
+                        icon: 'none'
+                      });
+                    } finally {
+                      _this2.isUploading = false;
+                    }
+                  case 2:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2);
+          }));
+          function success(_x) {
+            return _success.apply(this, arguments);
+          }
+          return success;
+        }()
+      });
+    },
+    // 下载文件
+    downloadFile: function downloadFile(filePath) {
+      uni.saveFile({
+        tempFilePath: filePath,
+        success: function success(res) {
+          var savedFilePath = res.savedFilePath;
+          uni.showToast({
+            title: '文件已保存: ' + savedFilePath,
+            icon: 'none'
+          });
+        }
+      });
     },
     // 点击常见问题
     askQuestion: function askQuestion(question) {
@@ -475,35 +594,35 @@ var _default = {
     // 加载常见问题列表
     loadFaqList: function loadFaqList() {
       var _this3 = this;
-      return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
+      return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3() {
         var response;
-        return _regenerator.default.wrap(function _callee2$(_context2) {
+        return _regenerator.default.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
+                _context3.prev = 0;
+                _context3.next = 3;
                 return uni.request({
                   url: "http://8.137.115.16:3000/api/ai/faq",
                   method: 'GET'
                 });
               case 3:
-                response = _context2.sent;
+                response = _context3.sent;
                 if (response.data && response.data.success) {
                   _this3.faqList = response.data.data;
                 }
-                _context2.next = 10;
+                _context3.next = 10;
                 break;
               case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                console.error('加载常见问题失败:', _context2.t0);
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.error('加载常见问题失败:', _context3.t0);
               case 10:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[0, 7]]);
+        }, _callee3, null, [[0, 7]]);
       }))();
     },
     // 滚动到底部
@@ -534,53 +653,46 @@ var _default = {
     // 全局刷新按钮逻辑
     handleRefresh: function handleRefresh() {
       var _this5 = this;
-      return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3() {
-        return _regenerator.default.wrap(function _callee3$(_context3) {
+      return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee4() {
+        return _regenerator.default.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 if (!_this5.isDragging) {
-                  _context3.next = 2;
+                  _context4.next = 2;
                   break;
                 }
-                return _context3.abrupt("return");
+                return _context4.abrupt("return");
               case 2:
-                // 显示加载提示
-                uni.showLoading({
-                  title: '刷新中...',
-                  mask: true
-                });
-                _context3.prev = 3;
+                _context4.prev = 2;
                 // 1. 清空现有对话
                 _this5.messages = [];
                 // 2. 重新加载FAQ列表
-                _context3.next = 7;
+                _context4.next = 6;
                 return _this5.loadFaqList();
-              case 7:
+              case 6:
                 // 3. 滚动到底部
                 _this5.scrollToBottom();
-                _context3.next = 14;
+                // 4. 清除本地存储
+                uni.removeStorageSync('chatHistory');
+                _context4.next = 14;
                 break;
               case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](3);
-                console.error('刷新失败:', _context3.t0);
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](2);
+                console.error('刷新失败:', _context4.t0);
+                // 仅在出错时显示提示，成功时不显示
                 uni.showToast({
                   title: '刷新失败，请重试',
                   icon: 'none',
                   duration: 1500
                 });
               case 14:
-                _context3.prev = 14;
-                // 隐藏加载提示
-                uni.hideLoading();
-                return _context3.finish(14);
-              case 17:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, null, [[3, 10, 14, 17]]);
+        }, _callee4, null, [[2, 10]]);
       }))();
     },
     // 触摸开始：记录初始位置

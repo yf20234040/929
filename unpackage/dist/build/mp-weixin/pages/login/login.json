@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "历小包登录",
-  "usingComponents": {
-    "wechat-login": "/components/WechatLogin"
-  }
-}

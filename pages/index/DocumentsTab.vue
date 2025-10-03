@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import careModeMixin from '@/mixins/careMode.js'
+import careModeMixin from '@/mixins/careMode.js';
 
 export default {
   mixins: [careModeMixin],
@@ -114,6 +114,7 @@ export default {
 </script>
 
 <style scoped>
+	
 /* 基础配色定义 - 浅蓝浅粉为主 */
 :root {
   --primary-light-blue: #DCEEFF;  /* 浅蓝主色 */
@@ -216,7 +217,7 @@ export default {
 /* 卡片图标 */
 .issue-icon {
   font-size: 48rpx;
-  margin-left: 20rpx; /* 避开左侧装饰条 */
+  margin-left: 20rpx; 
   margin-right: 28rpx;
   color: var(--text-gray);
 }

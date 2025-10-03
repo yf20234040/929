@@ -1,6 +1,6 @@
 <template>
   <view class="container" :class="{ 'care-mode': careMode }">
-    <!-- 顶部导航栏，风格与issue2一致 -->
+    <!-- 顶部导航栏 -->
     <view class="nav-bar beautify-navbar" :style="{paddingTop: statusBarHeight}">
       <view class="nav-left" @click="goBack">
         <text class="back-arrow">‹</text>

@@ -83,7 +83,8 @@
             "scope.phoneNumber" : {
                 "desc" : "用于手机号快速验证登录"
             }
-        }
+        },
+		"lazyCodeLoading": "requiredComponents"
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -98,4 +99,5 @@
         "enable" : false
     },
     "vueVersion" : "2"
+	
 }

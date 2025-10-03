@@ -11,7 +11,7 @@
       </view>
     </view>
 
-    <!-- 文件部分 - 修改为一行一个文件 -->
+    <!-- 文件部分  -->
     <view class="section-container">
       <view class="section-header">
         <text class="section-title">文档</text>
@@ -35,7 +35,7 @@
             <text class="file-type">{{ file.type.toUpperCase() }}</text>
           </view>
           <view class="view-btn">
-            <text class="btn-text">在线预览</text>
+            <text class="btn-text">查看</text>
             <text class="btn-arrow">→</text>
           </view>
         </view>

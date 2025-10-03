@@ -8,7 +8,7 @@
     <!-- 内容滚动区域 -->
     <scroll-view class="content" scroll-y :style="{ paddingBottom: '140rpx' }">
       <!-- 用户名片卡片 -->
-      <view class="card-section" @click="editProfile">
+      <view class="card-section" @click="editProfile" v-if="isLoggedIn">
         <view class="user-card">
           <!-- 背景装饰 -->
           <view class="card-bg">
@@ -115,6 +115,7 @@
 import careModeMixin from '@/mixins/careMode.js'
 
 export default {
+	
   mixins: [careModeMixin],
   
   data() {
@@ -138,7 +139,7 @@ export default {
   onShow() {
     this.checkLoginStatus();
     this.loadAvatarSize();
-    this.loadCareMode(); // 确保从设置页面返回时重新加载关怀模式状态
+    this.loadCareMode(); 
   },
   methods: {
     // 检查登录状态
@@ -153,6 +154,19 @@ export default {
       console.log('用户信息:', this.userInfo);
       console.log('用户类型:', this.userInfo.userType);
     },
+	// 检查登录状态方法（已存在，确保逻辑正确）
+	checkLoginStatus() {
+	  const userInfo = uni.getStorageSync('userInfo');
+	  const isLoggedIn = uni.getStorageSync('isLoggedIn');
+	  
+	  // 严格判断登录状态
+	  this.isLoggedIn = isLoggedIn === true || isLoggedIn === 'true';
+	  this.userInfo = userInfo || {};
+	  
+	  // 调试信息
+	  console.log('用户信息:', this.userInfo);
+	  console.log('登录状态:', this.isLoggedIn);
+	},
     
     // 跳转到登录页面
     goToLogin() {
@@ -300,7 +314,7 @@ export default {
 /* 基础样式 */
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #aaaaff 10%, #aaaaff 100%);
+  background: linear-gradient(180deg, #9797e2 0%, #fff5f7 50%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -312,7 +326,7 @@ export default {
 }
 
 .main-title {
-  font-size: 60rpx;
+  font-size: 80rpx;
   font-weight: bold;
   color: #ffffff; /* 主色调文字 */
   line-height: 1.5;
@@ -360,28 +374,28 @@ export default {
 .bg-circle {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  background: linear-gradient(45deg, rgba(210, 155, 255, 0.1), rgba(74, 79, 162, 0.1));
 }
 
 .circle-1 {
   width: 200rpx;
   height: 200rpx;
-  top: -100rpx;
-  right: -50rpx;
+  top: -50rpx;
+  right: -20rpx;
 }
 
 .circle-2 {
-  width: 150rpx;
-  height: 150rpx;
-  bottom: -75rpx;
-  left: -30rpx;
+  width: 300rpx;
+  height: 300rpx;
+  bottom: 50rpx;
+  left: -150rpx;
 }
 
 .circle-3 {
-  width: 100rpx;
-  height: 100rpx;
-  top: 50%;
-  right: 20rpx;
+  width: 150rpx;
+  height: 150rpx;
+  top: 80%;
+  right: 50rpx;
 }
 
 /* 头像容器 */

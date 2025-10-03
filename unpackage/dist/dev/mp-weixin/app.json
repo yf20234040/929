@@ -77,5 +77,6 @@
       "desc": "用于手机号快速验证登录"
     }
   },
+  "lazyCodeLoading": "requiredComponents",
   "usingComponents": {}
 }

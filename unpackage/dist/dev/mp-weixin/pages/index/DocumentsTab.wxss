@@ -114,6 +114,7 @@
 
 
 
+	
 /* 基础配色定义 - 浅蓝浅粉为主 */
 .data-v-ef92d19a:root {
   --primary-light-blue: #DCEEFF;  /* 浅蓝主色 */
@@ -211,7 +212,7 @@
 /* 卡片图标 */
 .issue-icon.data-v-ef92d19a {
   font-size: 48rpx;
-  margin-left: 20rpx; /* 避开左侧装饰条 */
+  margin-left: 20rpx; 
   margin-right: 28rpx;
   color: var(--text-gray);
 }

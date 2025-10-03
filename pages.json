@@ -58,7 +58,7 @@
 		{
 			"path": "pages/index/AiTab",
 			"style": {
-				"navigationBarTitleText": "AI问答",
+				"navigationBarTitleText": "历小包AI助手",
 				"navigationStyle": "custom"
 			}
 		},
@@ -284,66 +284,6 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	
-	"subPackages": [
-		{
-			"root": "pages/issue1",
-			"pages": [
-				"issue111",
-				"issue112", 
-				"issue113",
-				"issue1131",
-				"issue121",
-				"issue122",
-				"issue131",
-				"issue141",
-				"issue151",
-				"issue152",
-				"issue153",
-				"issue154",
-				"issue155"
-			],
-			"independent": true
-		},
-		{
-			"root": "pages/issue2",
-			"pages": [
-				"issue211",
-				"issue212",
-				"issue213",
-				"issue214",
-				"issue22",
-				"issue23",
-				"issue24",
-				"issue25",
-				"issue26"
-			],
-			"independent": true
-		},
-		{
-			"root": "pages/issue3",
-			"pages": [
-				"issue31",
-				"issue32",
-				"issue34",
-				"issue35",
-				"issue331",
-				"issue332",
-				"issue361",
-				"issue362",
-				"issue363",
-				"issue364",
-				"issue365",
-				"issue366",
-				"issue367",
-				"issue371",
-				"issue372",
-				"issue374",
-				"issue375"
-			],
-			"independent": true
-		}
-	],
 
 	"uniIdRouter": {}
 }

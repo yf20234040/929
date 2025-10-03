@@ -18,7 +18,7 @@
         <text class="section-desc">点击查看详情</text>
       </view>
       
-      <!-- 将file-grid改为file-list，使用flex垂直布局 -->
+      <!-- 使用flex垂直布局 -->
       <view class="file-list">
         <view
           v-for="(file, index) in fileList"

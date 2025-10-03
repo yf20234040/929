@@ -6,8 +6,7 @@
         <text class="back-icon">←</text>
       </view>
       <text class="nav-title">历小包AI助手</text>
-      <view class="nav-right">
-      </view>
+      <view class="nav-right"></view><!-- 留空美化布局 -->
     </view>
     
     <!-- 渐变背景装饰 -->
@@ -19,7 +18,6 @@
 	
     <!-- 聊天界面 -->
     <view class="chat-container">
-      
       <!-- 消息列表 -->
       <scroll-view class="message-list" scroll-y :scroll-top="scrollTop">
         <!-- 欢迎消息 -->
@@ -31,7 +29,7 @@
             <text class="message-text">你好，有什么我能帮你的吗</text>
           </view>
         </view>
-        
+		
         <!-- 对话消息 -->
         <view class="message-item" v-for="(message, index) in messages" :key="index" :class="message.role">
           <view class="message-avatar">
@@ -39,11 +37,18 @@
             <view v-else class="avatar-text">👤</view>
           </view>
           <view class="message-content">
-            <rich-text class="message-text" :nodes="formatMessage(message.content)"></rich-text>
+            <!-- 文件消息 -->
+            <view v-if="message.type === 'file'" class="file-item">
+              <text class="file-icon">📎</text>
+              <text class="file-name">{{ message.fileName }}</text>
+              <button class="file-download" @click="downloadFile(message.content)">下载</button>
+            </view>
+            <!-- 文本消息 -->
+            <rich-text v-if="message.type !== 'image' && message.type !== 'file'" class="message-text" :nodes="formatMessage(message.content)"></rich-text>
           </view>
         </view>
         
-        <!-- 加载状态 -->
+        <!-- 等待AI输出时的加载动画 -->
         <view class="message-item assistant" v-if="isLoading">
           <view class="message-avatar">
             <image class="avatar-image" src="https://llzm-lixiaobao.oss-cn-beijing.aliyuncs.com/logo.jpg" mode="aspectFill" />
@@ -61,16 +66,23 @@
       <!-- 输入区域 -->
       <view class="input-area">
         <view class="input-wrapper">
+          <!-- 文件上传按钮 -->
+          <view class="upload-buttons">
+            <button class="upload-btn" @click="chooseFile" :disabled="isLoading">
+              <text class="upload-icon">📎</text>
+            </button>
+          </view>
+          
           <input 
             class="message-input" 
             v-model="inputMessage" 
-            placeholder="输入你的问题"
+            placeholder="请输入你的问题"
             :disabled="isLoading"
             @confirm="sendMessage"
           />
           <button class="send-button" @click="sendMessage" :class="{ 
-            disabled: !inputMessage.trim() || isLoading,
-            sending: isLoading 
+            disabled: (!inputMessage.trim() && !isUploading) || isLoading,
+            sendingding: isLoading 
           }">
             <text v-if="!isLoading">发送</text>
             <text v-else>发送中...</text>
@@ -79,7 +91,7 @@
       </view>
     </view>
     
-    <!-- 全局悬浮刷新按钮（可拖动） -->
+    <!-- 全局悬浮刷新按钮 -->
     <view 
       class="global-refresh-btn" 
       @click="handleRefresh"
@@ -93,6 +105,7 @@
     >
       <image class="refresh-icon-img" src="https://llzm-lixiaobao.oss-cn-beijing.aliyuncs.com/%E5%88%B7%E6%96%B0.png" mode="widthFix"></image>
     </view>
+	
   </view>
 </template>
 
@@ -108,6 +121,7 @@ export default {
       inputMessage: '',
       messages: [],
       isLoading: false,
+      isUploading: false, // 新增：上传状态
       scrollTop: 0,
       faqList: [
         {
@@ -141,6 +155,7 @@ export default {
     const sys = uni.getSystemInfoSync();
     this.statusBarHeight = sys.statusBarHeight || 0;
     this.loadFaqList();
+    this.loadMessagesFromStorage(); // 加载本地存储的对话记录
     
     // 初始化窗口宽高和按钮位置
     this.windowWidth = sys.windowWidth;
@@ -148,12 +163,49 @@ export default {
     this.btnX = 30 / 2; // 转换rpx为px
     this.btnY = 500 / 2;
   },
+  onUnload() {
+    // 页面卸载时保存对话记录
+    this.saveMessagesToStorage();
+  },
+  onHide() {
+    // 页面隐藏时保存对话记录
+    this.saveMessagesToStorage();
+  },
   methods: {
+    // 从本地存储加载对话记录
+    loadMessagesFromStorage() {
+      try {
+        const storedMessages = uni.getStorageSync('chatHistory');
+        if (storedMessages) {
+          this.messages = JSON.parse(storedMessages);
+          this.scrollToBottom();
+        }
+      } catch (e) {
+        console.error('加载对话记录失败:', e);
+      }
+    },
+    
+    // 保存对话记录到本地存储
+    saveMessagesToStorage() {
+      try {
+        // 只保存必要的字段，避免存储过大
+        const messagesToSave = this.messages.map(msg => ({
+          role: msg.role,
+          type: msg.type || 'text',
+          content: msg.content,
+          fileName: msg.fileName,
+          timestamp: msg.timestamp
+        }));
+        uni.setStorageSync('chatHistory', JSON.stringify(messagesToSave));
+      } catch (e) {
+        console.error('保存对话记录失败:', e);
+      }
+    },
+    
     // 格式化消息内容，处理Markdown
     formatMessage(content) {
       if (!content) return '';
       
-      // 清理和格式化内容
       let formatted = content
         // 处理标题 - 移除#符号并转换为样式
         .replace(/^#{1,6}\s+(.*)$/gm, (match, title) => {
@@ -165,10 +217,10 @@ export default {
         .replace(/\*\*(.*?)\*\*/g, '<span style="font-weight: bold;">$1</span>')
         // 处理斜体
         .replace(/\*(.*?)\*/g, '<span style="font-style: italic;">$1</span>')
-        // 处理列表项
-        .replace(/^[\s]*[-*+]\s+(.*)$/gm, '<div style="margin: 8rpx 0; padding-left: 20rpx; position: relative;"><span style="position: absolute; left: 0; color: #666;">•</span>$1</div>')
+        // 处理无序列表
+        .replace(/^[\s]*[-*+]\s+(.*)$/gm, '<div style="margin: 12rpx 0; padding-left: 30rpx; position: relative; line-height: 1.8;"><span style="position: absolute; left: 0; color: #666; background: #fff;">•</span>$1</div>')
         // 处理数字列表
-        .replace(/^[\s]*(\d+)\.\s+(.*)$/gm, '<div style="margin: 8rpx 0; padding-left: 20rpx; position: relative;"><span style="position: absolute; left: 0; color: #666;">$1.</span>$2</div>')
+        .replace(/^[\s]*(\d+)\.\s+(.*)$/gm, '<div style="margin: 12rpx 0; padding-left: 30rpx; position: relative; line-height: 1.8;"><span style="position: absolute; left: 0; color: #666; background: #fff; padding-right: 4rpx;">$1.</span>$2</div>')
         // 处理换行
         .replace(/\n/g, '<br/>')
         // 清理多余的#符号
@@ -179,14 +231,11 @@ export default {
       return formatted;
     },
     
-    // 原始返回逻辑保持不变
+    // 返回逻辑
     goBack() {
       console.log('返回按钮被点击');
-      uni.showToast({
-        title: '返回按钮被点击',
-        icon: 'none',
-        duration: 1000
-      });
+      // 离开页面时保存对话
+      this.saveMessagesToStorage();
       
       try {
         // 先尝试返回上一页
@@ -233,23 +282,10 @@ export default {
       }
     },
     
-    // 清空对话
-    clearChat() {
-      uni.showModal({
-        title: '确认清空',
-        content: '确定要清空所有对话记录吗？',
-        success: (res) => {
-          if (res.confirm) {
-            this.messages = [];
-            this.scrollToBottom();
-          }
-        }
-      });
-    },
     
     // 发送消息
     async sendMessage() {
-      if (!this.inputMessage.trim() || this.isLoading) return;
+      if ((!this.inputMessage.trim() && !this.isUploading) || this.isLoading) return;
       
       const userMessage = this.inputMessage.trim();
       this.inputMessage = '';
@@ -257,8 +293,9 @@ export default {
       // 添加用户消息
       this.messages.push({
         role: 'user',
+        type: 'text',
         content: userMessage,
-        timestamp: new Date()
+        timestamp: new Date().toISOString()
       });
       
       this.scrollToBottom();
@@ -288,8 +325,9 @@ export default {
           // 添加AI回复
           this.messages.push({
             role: 'assistant',
+            type: 'text',
             content: response.data.data.answer,
-            timestamp: new Date()
+            timestamp: new Date().toISOString()
           });
         } else {
           throw new Error(response.data?.error || 'AI服务暂时不可用');
@@ -299,13 +337,79 @@ export default {
         console.error('AI问答失败:', error);
         this.messages.push({
           role: 'assistant',
+          type: 'text',
           content: '抱歉，AI服务暂时不可用，请稍后再试。',
-          timestamp: new Date()
+          timestamp: new Date().toISOString()
         });
       } finally {
         this.isLoading = false;
         this.scrollToBottom();
+        // 保存对话记录
+        this.saveMessagesToStorage();
       }
+    },
+    
+    // 选择文件
+    chooseFile() {
+      if (this.isLoading || this.isUploading) return;
+      
+      uni.chooseMessageFile({
+        count: 1,
+        type: 'file',
+        success: async (res) => {
+          this.isUploading = true;
+          try {
+            // 添加文件消息
+            this.messages.push({
+              role: 'user',
+              type: 'file',
+              content: res.tempFiles[0].path,
+              fileName: res.tempFiles[0].name,
+              fileSize: res.tempFiles[0].size,
+              timestamp: new Date().toISOString()
+            });
+            
+            this.scrollToBottom();
+            // 保存对话记录
+            this.saveMessagesToStorage();
+            
+            // 模拟AI回复
+            setTimeout(() => {
+              this.messages.push({
+                role: 'assistant',
+                type: 'text',
+                content: `我已收到你发送的文件《${res.tempFiles[0].name}》，需要我帮你解析文件内容吗？`,
+                timestamp: new Date().toISOString()
+              });
+              this.scrollToBottom();
+              // 保存对话记录
+              this.saveMessagesToStorage();
+            }, 1000);
+          } catch (error) {
+            console.error('文件上传失败:', error);
+            uni.showToast({
+              title: '文件上传失败',
+              icon: 'none'
+            });
+          } finally {
+            this.isUploading = false;
+          }
+        }
+      });
+    },
+    
+    // 下载文件
+    downloadFile(filePath) {
+      uni.saveFile({
+        tempFilePath: filePath,
+        success: function (res) {
+          const savedFilePath = res.savedFilePath;
+          uni.showToast({
+            title: '文件已保存: ' + savedFilePath,
+            icon: 'none'
+          });
+        }
+      });
     },
     
     // 点击常见问题
@@ -356,33 +460,27 @@ export default {
     
     // 全局刷新按钮逻辑
     async handleRefresh() {
-      // 如果处于拖动状态，不执行刷新（避免误触）
-      if (this.isDragging) return;
-
-      // 显示加载提示
-      uni.showLoading({
-        title: '刷新中...',
-        mask: true
-      });
-      
-      try {
-        // 1. 清空现有对话
-        this.messages = [];
-        // 2. 重新加载FAQ列表
-        await this.loadFaqList();
-        // 3. 滚动到底部
-        this.scrollToBottom();
-      } catch (error) {
-        console.error('刷新失败:', error);
-        uni.showToast({
-          title: '刷新失败，请重试',
-          icon: 'none',
-          duration: 1500
-        });
-      } finally {
-        // 隐藏加载提示
-        uni.hideLoading();
-      }
+     // 如果处于拖动状态，不执行刷新（避免误触）
+       if (this.isDragging) return;
+     
+       try {
+         // 1. 清空现有对话
+         this.messages = [];
+         // 2. 重新加载FAQ列表
+         await this.loadFaqList();
+         // 3. 滚动到底部
+         this.scrollToBottom();
+         // 4. 清除本地存储
+         uni.removeStorageSync('chatHistory');
+       } catch (error) {
+         console.error('刷新失败:', error);
+         // 仅在出错时显示提示，成功时不显示
+         uni.showToast({
+           title: '刷新失败，请重试',
+           icon: 'none',
+           duration: 1500
+         });
+       }
     },
     
     // 触摸开始：记录初始位置
@@ -484,6 +582,8 @@ export default {
   backdrop-filter: blur(10rpx);
   margin-right: 20rpx;
 }
+
+
 
 .back-icon {
   font-size: 36rpx;
@@ -672,6 +772,55 @@ export default {
   border-radius: 50%;
 }
 
+/* 图片消息样式 */
+.message-image {
+  max-width: 100%;
+  border-radius: 16rpx;
+  margin: 8rpx 0;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 文件消息样式 */
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 12rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.file-icon {
+  font-size: 36rpx;
+  color: #666;
+}
+
+.file-name {
+  flex: 1;
+  font-size: 26rpx;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-download {
+  padding: 8rpx 16rpx;
+  background: linear-gradient(135deg, #ff6b8b, #ff8e8e);
+  color: white;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  border: none;
+  height: auto;
+  line-height: 1;
+}
+
+.file-download::after {
+  border: none;
+}
+
 /* AI消息内容 */
 .message-item.assistant .message-content {
   background: #f0f8ff;
@@ -761,6 +910,39 @@ export default {
   background: #f5f5f5;
   border-radius: 25rpx;
   padding: 8rpx;
+}
+
+/* 上传按钮样式 */
+.upload-buttons {
+  display: flex;
+  gap: 8rpx;
+  padding-left: 8rpx;
+}
+
+.upload-btn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+.upload-btn::after {
+  border: none;
+}
+
+.upload-icon {
+  font-size: 32rpx;
+  color: #666;
+}
+
+.upload-btn:disabled {
+  opacity: 0.5;
 }
 
 .message-input {
@@ -934,16 +1116,4 @@ export default {
   transform: scale(0.95);
   box-shadow: 0 4rpx 12rpx rgba(255, 167, 190, 0.3);
 }
-
-/* 关怀模式适配 */
-.container.care-mode .global-refresh-btn {
-  width: 110rpx;
-  height: 110rpx;
-}
-.container.care-mode .global-refresh-btn .refresh-icon-img {
-  width: 50rpx;
-  height: 50rpx;
-}
-
 </style>
-    

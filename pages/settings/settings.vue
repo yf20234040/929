@@ -81,40 +81,41 @@ export default {
     // 处理退出登录逻辑
     handleLogout() {
       // 1. 显示确认弹窗（避免误操作）
-      uni.showModal({
-        title: '确认退出',
-        content: '确定要退出当前账号吗？',
-        confirmText: '退出',
-        cancelText: '取消',
-        confirmColor: '#ff4d4f', // 强调色（红色）
-        success: (res) => {
-          if (res.confirm) {
-            // 2. 清除登录状态（根据实际项目存储方式调整，如uni.setStorageSync/uni.removeStorageSync）
-            uni.removeStorageSync('wechatLoginToken'); // 清除登录token
-            uni.removeStorageSync('userInfo'); // 清除用户信息
-            
-            // 3. 关闭所有页面，跳转到主页
-            uni.reLaunch({
-              url: '/pages/login/index', // 
-              success: () => {
-                // 4. 提示退出成功
-                uni.showToast({
-                  title: '退出成功',
-                  icon: 'success',
-                  duration: 1500
-                });
-              },
-              fail: (err) => {
-                console.error('跳转登录页失败：', err);
-                uni.showToast({
-                  title: '退出失败，请重试',
-                  icon: 'none'
-                });
-              }
-            });
+        uni.showModal({
+          title: '确认退出',
+          content: '确定要退出当前账号吗？',
+          confirmText: '退出',
+          cancelText: '取消',
+          confirmColor: '#ff4d4f', // 强调色（红色）
+          success: (res) => {
+            if (res.confirm) {
+              // 2. 清除登录状态
+              uni.removeStorageSync('wechatLoginToken'); // 清除登录token
+              uni.removeStorageSync('userInfo'); // 清除用户信息
+              uni.removeStorageSync('isLoggedIn'); // 清除登录状态标记
+              
+              // 3. 跳转到个人中心页面（而非登录页）
+              uni.redirectTo({
+                url: '/pages/index/index?tab=4', // 假设个人中心是第4个tab
+                success: () => {
+                  // 4. 提示退出成功
+                  uni.showToast({
+                    title: '退出成功',
+                    icon: 'success',
+                    duration: 1500
+                  });
+                },
+                fail: (err) => {
+                  console.error('跳转个人中心失败：', err);
+                  uni.showToast({
+                    title: '退出失败，请重试',
+                    icon: 'none'
+                  });
+                }
+              });
+            }
           }
-        }
-      });
+        });
     }
   }
 }
